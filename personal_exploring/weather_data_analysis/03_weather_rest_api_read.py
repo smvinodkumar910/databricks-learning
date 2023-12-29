@@ -73,3 +73,10 @@ file_path = utc_time.strftime('%Y%m%d%H%M%S')
 loc_df.to_csv(os.path.join(target_path,"LOCATION_DTL_"+file_path+".csv"),index=None )
 cc_df.to_csv(os.path.join(target_path,"CURRENT_CONDITION_DTL_"+file_path+".csv"),index=None )
 wd_df.to_csv(os.path.join(target_path,"WEATHER_DETAILS_DTL_"+file_path+".csv"),index=None )
+
+
+
+# COMMAND ----------
+
+
+spark.conf.set('inbound_path',target_path)
