@@ -51,43 +51,28 @@
 
 # COMMAND ----------
 
-dbutils.fs.ls('/')
-
-
-# COMMAND ----------
-
-# MAGIC %sql
-# MAGIC USE CATALOG weather_catalog;
-# MAGIC USE SCHEMA bronze_raw;
-# MAGIC DESCRIBE SCHEMA bronze_raw;
-
-# COMMAND ----------
-
-import pandas as pd
-
-loc_dtl = pd.read_csv('/Volumes/weather_catalog/bronze_raw/location_dtl/LOCATION_DTL_20231128104310.csv')
-
-display(loc_dtl)
+# MAGIC %md
+# MAGIC ### Create Schema
+# MAGIC
+# MAGIC 1. Create 3 schemas for Bronze, silver and gold layer respectively.
 
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC create table RAW_LOCATION_DTL AS
-# MAGIC select * from read_files('/Volumes/weather_catalog/bronze_raw/location_dtl/LOCATION_DTL_20231128104310.csv',
-# MAGIC    format => 'csv',
-# MAGIC   header => true,
-# MAGIC   mode => 'FAILFAST');
+# MAGIC USE CATALOG weather_analysis_dev;
+# MAGIC
+# MAGIC CREATE SCHEMA IF NOT EXISTS BRONZE_LAYER;
+# MAGIC CREATE SCHEMA IF NOT EXISTS SILVER_LAYER;
+# MAGIC CREATE SCHEMA IF NOT EXISTS GOLD_LAYER;
+# MAGIC
+
+# COMMAND ----------
+
+# MAGIC %md
+# MAGIC ### Create a Volume based on External Files location
 
 # COMMAND ----------
 
 # MAGIC %sql
-# MAGIC DESCRIBE TABLE EXTENDED weather_catalog.bronze_raw.raw_location_dtl;
-
-# COMMAND ----------
-
-# MAGIC %sql
-# MAGIC create table RAW_LOCATION_DTL_EXTERNAL LOCATION 'gs://databricks-source-bucket/weather_data/external/' AS
-# MAGIC select * from read_files('/Volumes/weather_catalog/bronze_raw/location_dtl/LOCATION_DTL_20231128104310.csv',
-# MAGIC    format => 'csv',
-# MAGIC   header => true,
-# MAGIC   mode => 'FAILFAST');
+# MAGIC CREATE EXTERNAL VOLUME IF NOT EXISTS bronze_layer.weather_data
+# MAGIC LOCATION 'gs://smvinod-dbricks-data/datasetFiles/weather_data';
