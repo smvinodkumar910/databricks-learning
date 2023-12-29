@@ -1,0 +1,10 @@
+{
+  "catalog_name":"weather_analysis_dev",
+  "bronze_schema":"bronze_layer",
+  "silver_schema":"silver_layer",
+  "gold_schema":"gold_layer",
+  "files_volume":"weather_data",
+  "weather_api_host":"weatherapi-com.p.rapidapi.com",
+  "weather_api_key":"11e969206dmsh2dc567692521a17p1aff25jsnf8d1e65d23f9",
+  "weather_api_url":"https://weatherapi-com.p.rapidapi.com/current.json"
+}
